@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: edtech_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: adrian_cto
+      POSTGRES_PASSWORD: bariloche_saas_2026
+      POSTGRES_DB: edtech_core_db
+    ports:
+      - "5432:5432"
+
+  pgadmin_panel:
+    image: dpage/pgadmin4
+    container_name: edtech_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: adrian@saas.com
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres_db

@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS EdTech - Ecosistema Alfa</title>
+    <script src="https://tailwindcss.com"></script>
+    <style>.screen, .subtab { display: none; } .screen.active, .subtab.active { display: block; }</style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans pb-24 p-4 md:p-8">
+<div class="max-w-4xl mx-auto space-y-6">
+    <div class="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-xl border shadow-sm gap-4">
+        <div>
+            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase">Entorno Alfa</span>
+            <h1 class="text-2xl font-black text-slate-900 mt-1">🎯 CORE EDTECH SAAS</h1>
+            <p class="text-xs text-slate-500">Multi-tenant Demo Dinámica</p>
+        </div>
+        <div class="flex flex-wrap bg-slate-100 p-1 rounded-xl border gap-1 w-full md:w-auto" id="role-selector">
+            <button id="nav-alumno" onclick="switchRole('alumno')" class="px-4 py-2 text-xs font-bold rounded-lg bg-blue-600 text-white shadow-sm uppercase">1. Alumno</button>
+            <button id="nav-profesor" onclick="switchRole('profesor')" class="px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-200 uppercase">2. Docente</button>
+            <button id="nav-instituto" onclick="switchRole('instituto')" class="px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-200 uppercase">🏛️ Inst</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA Alumno -->
+    <div id="screen-alumno" class="screen shadow-md p-4 bg-white rounded-xl active space-y-6">
+        <div class="bg-white p-6 rounded-xl border shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+                <h2 class="text-lg font-bold text-slate-900">📱 Panel del Alumno: <span class="text-blue-600 font-black">Martín</span></h2>
+                <p class="text-xs text-slate-500">Empresa: Globant | <span id="al-tut" class="font-bold text-slate-700">Tutor: Prof. Laura M.</span></p>
+            </div>
+            <span id="alumno-status-badge" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border">✔ REGULAR / AL DÍA</span>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border shadow-sm text-center space-y-4">
+            <div class="bg-blue-50 border-l-4 border-blue-600 p-3 text-left text-xs text-slate-700">
+                <strong>Desafío Semanal:</strong> Explica en 45 segundos el retraso del sprint por un bug crítico.
+            </div>
+            <button id="mic-btn" onclick="toggleRecording()" class="w-16 h-16 bg-red-500 text-white rounded-full text-2xl mx-auto shadow-md hover:scale-105 active:scale-95 transition-all">🎙️</button>
+            <p id="mic-status" class="text-xs font-bold text-slate-500">Presioná para grabar tu voz en vivo</p>
+            <div id="audio-preview-container" class="mt-2 hidden"></div>
+        </div>
+
+        <div class="flex gap-1 bg-slate-100 p-1 rounded-xl border text-xs font-bold overflow-x-auto">
+            <button id="tab-acad" onclick="switchStudentSubTab('acad')" class="flex-1 py-1.5 px-3 rounded-md bg-blue-600 text-white uppercase">📚 Devolución</button>
+            <button id="tab-news" onclick="switchStudentSubTab('news')" class="flex-1 py-1.5 px-3 rounded-md text-slate-600 hover:bg-slate-200 uppercase">💬 Foro y Noticias</button>
+            <button id="tab-study" onclick="switchStudentSubTab('study')" class="flex-1 py-1.5 px-3 rounded-md text-slate-600 hover:bg-slate-200 uppercase">📖 Biblioteca</button>
+            <button id="tab-eval" onclick="switchStudentSubTab('eval')" class="flex-1 py-1.5 px-3 rounded-md text-slate-600 hover:bg-slate-200 uppercase">📝 TPs</button>
+        </div>
+
+        <div id="sub-alumno-acad" class="subtab active"><textarea id="alumno-feedback-view" readonly class="w-full h-32 p-3 bg-slate-50 border rounded-lg font-mono text-xs" placeholder="El feedback aparecerá acá..."></textarea></div>
+        
+        <div id="sub-alumno-news" class="subtab space-y-4">
+            <div class="p-3 bg-amber-50 border-l-4 border-amber-500 text-xs rounded">📢 <strong>Noticia:</strong> Webinar Vivo este Jueves sobre Negociación Corporativa.</div>
+            <div id="foro-mensajes" class="h-32 bg-slate-50 p-3 rounded border text-xs overflow-y-auto space-y-2 block"><div><strong>Prof. Laura M.:</strong> Bienvenidos al foro de vocabulario técnico.</div></div>
+            <div class="flex gap-2"><input type="text" id="foro-input" placeholder="Escribí..." class="flex-1 p-2 text-xs border rounded-lg"><button onclick="enviarMensajeForo()" class="bg-blue-600 text-white px-4 py-2 text-xs font-bold rounded-lg uppercase">Post</button></div>
+        </div>
+
+        <div id="sub-alumno-study" class="subtab p-4 bg-slate-50 border rounded-lg flex justify-between items-center text-xs">
+            <span>📕 <strong>Guía de Idioms de Negocios (PDF)</strong></span>
+            <button onclick="alert('Descargando de Biblioteca...')" class="bg-blue-50 text-blue-600 font-bold px-2 py-1 rounded">Descargar</button>
+        </div>
+
+        <div id="sub-alumno-eval" class="subtab p-4 bg-slate-50 border rounded-lg flex justify-between items-center text-xs">
+            <span>📑 <strong>TP 1: Redacción de Mails Corporativos</strong></span>
+            <button onclick="alert('TP Entregado.')" class="bg-blue-600 text-white font-bold px-3 py-1.5 rounded-lg uppercase">Entregar</button>
+        </div>
+    </div>
+    <!-- PANTALLA PROFESOR -->
+    <div id="screen-profesor" class="screen space-y-6">
+        <div class="bg-white p-6 rounded-xl border shadow-sm">
+            <h2 class="text-base font-bold text-slate-900">💻 Panel del Docente: <span class="text-blue-600">Prof. Laura Martínez</span></h2>
+            <div class="grid grid-cols-3 gap-2 text-xs mt-3">
+                <div class="p-2 bg-slate-50 border-l-4 border-emerald-500 rounded"><strong>Martín</strong> (Globant)</div>
+                <div class="p-2 bg-slate-50 border-l-4 border-emerald-500 rounded"><strong>Sofía</strong> (Meli)</div>
+                <div class="p-2 bg-slate-50 border-l-4 border-red-500 rounded text-red-500 font-bold"><strong>Lucas</strong> (Falta Audio)</div>
+            </div>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-300 rounded-xl p-4 text-xs space-y-2">
+            <strong class="text-emerald-800 block">🤖 Asistente IA (Pre-Escucha):</strong>
+            <p class="text-slate-700">Fricción fonética en la letra "R" y error en orden del adjetivo.</p>
+            <div class="flex gap-2">
+                <button onclick="inject('r_sound')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[11px]">Aplicar #R_SOFT_SOUND</button>
+                <button onclick="inject('adjective')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[11px]">Aplicar #ADJECTIVE_BEFORE</button>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border shadow-sm space-y-3">
+            <div class="bg-slate-100 p-2 rounded text-xs font-mono text-slate-700 flex justify-between"><span>📁 audio_assignment.wav</span><span id="audio-state" class="text-red-600 font-bold">Pendiente</span></div>
+            <div id="prof-playback" class="bg-slate-50 p-3 rounded text-center text-xs text-slate-400 italic">Esperando audio del alumno...</div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border shadow-sm space-y-3">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Botonera de Gastón:</p>
+            <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                <button class="p-2 bg-slate-50 border rounded text-left hover:bg-blue-50" onclick="inject('vocals')">❌ #VOCAL_C_L</button>
+                <button class="p-2 bg-slate-50 border rounded text-left hover:bg-blue-50" onclick="inject('r_sound')">❌ #R_SOFT</button>
+                <button class="p-2 bg-slate-50 border rounded text-left hover:bg-blue-50" onclick="inject('h_sound')">❌ #H_SOUND</button>
+                <button class="p-2 bg-slate-50 border rounded text-left hover:bg-blue-50" onclick="inject('adjective')">❌ #ADJECTIVE</button>
+            </div>
+            <textarea id="editor" class="w-full h-36 p-3 bg-slate-50 border rounded-lg font-mono text-xs mt-2" placeholder="Seleccioná un error arriba..."></textarea>
+            <button onclick="sendFeedback()" class="w-full bg-emerald-500 text-white font-bold py-3 rounded-lg text-xs uppercase mt-2">Enviar Corrección al Alumno</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA INSTITUTO -->
+    <div id="screen-instituto" class="screen space-y-6 text-xs">
+        <div class="bg-white p-6 rounded-xl border shadow-sm"><h2 class="text-base font-bold text-slate-900">🏛️ Gestión del Instituto</h2></div>
+        <div class="bg-white p-6 rounded-xl border shadow-sm">
+            <h3 class="font-bold text-slate-800 uppercase tracking-wider mb-2">👥 Jerarquía Directiva</h3>
+            <p class="p-2 bg-slate-50 rounded"><strong>Directora Académica:</strong> Mg. Elena Rostova (SuperAdmin)</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border shadow-sm">
+            <h3 class="font-bold text-slate-800 uppercase tracking-wider mb-2">📋 Asignación y Control</h3>
+            <div class="flex justify-between items-center p-2 bg-slate-50 rounded">
+                <span><strong>Martín (Globant)</strong></span>
+                <select onchange="reassign(this.value)" class="p-1 border rounded"><option>Prof. Laura M.</option><option>Prof. Carlos G.</option></select>
+                <button onclick="alert('Alerta de Mora enviada. Cuenta suspendida.')" class="bg-red-50 text-red-600 px-2 py-1 rounded font-bold">Forzar Mora</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fixed bottom-5 left-5 z-50"><button onclick="support()" class="bg-red-600 text-white font-bold text-xs px-4 py-3 rounded-full shadow-lg">🚨 Soporte</button></div>
+<div id="wa-popup" class="hidden fixed bottom-5 right-5 z-50 bg-[#25D366] text-white p-4 rounded-xl shadow-2xl max-w-[240px] text-xs"></div>
+
+<script>
+    let mediaRecorder; let audioChunks = []; let isRecording = false; let audioUrl = null;
+    const db = {
+        'vocals': "⚠️ CORRECCIÓN: Vocales cortas vs. largas\n\nCambiar la duración cambia el significado. Ejemplo: Confundir Sheet (larga) con Shit (corta).\n\n🎯 TIP: Sonido largo /i:/ -> sonreí exageradamente.",
+        'r_sound': "⚠️ CORRECCIÓN: La suavidad de la 'R'\n\nLa lengua nunca toca el paladar; se curva hacia atrás flotando en el medio.\n\n🎯 TIP: Boca en forma de 'U' (wrrr).",
+        'h_sound': "⚠️ CORRECCIÓN: La 'H' no es muda\n\nEs un suspiro suave, no una 'J' fuerte de español.",
+        'adjective': "⚠️ CORRECCIÓN: Adjetivo antes del Sustantivo\n\nLa descripción siempre va antes del objeto (blue car)."
+    };
+    function switchRole(roleId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+        document.querySelectorAll('#role-selector button').forEach(b => b.className = 'px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-200 uppercase');
+        document.getElementById('screen-' + roleId).classList.remove('hidden');
+        document.getElementById('nav-' + roleId).className = 'px-4 py-2 text-xs font-bold rounded-lg bg-blue-600 text-white shadow-sm uppercase';
+    }
+    function switchStudentSubTab(tabId) {
+        document.querySelectorAll('.subtab').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('[id^="tab-"]').forEach(b => b.className = 'flex-1 py-2 px-3 text-xs font-bold rounded-md text-slate-600 hover:bg-slate-100 transition-all uppercase');
+        document.getElementById('sub-alumno-' + tabId).style.display = 'block';
+        document.getElementById('tab-' + tabId).className = 'flex-1 py-2 px-3 text-xs font-bold rounded-md bg-blue-600 text-white transition-all uppercase';
+    }
+    function wa(m) {
+        const p = document.getElementById('wa-popup'); p.innerHTML = "<strong>💬 Alerta WhatsApp</strong><br>" + m;
+        p.classList.remove('hidden'); setTimeout(() => p.classList.add('hidden'), 4000);
+    }
+    function support() { wa("Ticket de soporte abierto e indexado en la cola técnica de boxes."); }
+    async function toggleRecording() {
+        const btn = document.getElementById('mic-btn'); const status = document.getElementById('mic-status');
+        if (!isRecording) {
+            audioChunks = [];
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(audioChunks, { type: 'audio/wav' }); audioUrl = URL.createObjectURL(blob);
+                    document.getElementById('audio-preview-container').innerHTML = `<audio controls src="${audioUrl}" class="w-full mt-2"></audio>`;
+                    document.getElementById('audio-preview-container').classList.remove('hidden');
+                    document.getElementById('prof-playback').innerHTML = `<audio controls src="${audioUrl}" class="w-full"></audio>`;
+                    document.getElementById('audio-state').innerText = "Nuevo Audio"; document.getElementById('audio-state').className = 'text-emerald-600 font-bold';
+                    wa("Audio enviado con éxito a la cola del docente.");
+                };
+                mediaRecorder.start(); isRecording = true; btn.className = 'w-16 h-16 bg-slate-800 text-white rounded-full flex items-center justify-center text-2xl mx-auto animate-pulse'; status.innerText = '🛑 Grabando...';
+            } catch (err) { alert("Error de micrófono: " + err); }
+        } else {
+            mediaRecorder.stop(); isRecording = false; btn.className = 'w-16 h-16 bg-red-500 text-white rounded-full flex items-center justify-center text-2xl mx-auto shadow-lg'; status.innerText = '✅ Grabado. Pasá a Vista Docente.';
+        }
+    }
+    function inject(k) { document.getElementById('editor').value = db[k] || ''; }
+    function sendFeedback() {
+        const t = document.getElementById('editor').value; if(!t) return;
+        document.getElementById('alumno-feedback-view').value = t;
+        document.getElementById('audio-state').innerText = 'Revisado'; document.getElementById('audio-state').className = 'text-slate-500 font-bold';
+        wa("Corrección enviada. Redirigiendo al alumno.");
+        setTimeout(() => { switchRole('alumno'); switchStudentSubTab('acad'); }, 1000);
+    }
+    function enviarMensajeForo() {
+        const t = document.getElementById('foro-input').value; if(!t) return;
+        document.getElementById('foro-mensajes').innerHTML += `<div class='p-2 bg-slate-50 rounded text-xs'><strong>Martín:</strong> ${t}</div>`;
+        document.getElementById('foro-input').value = "";
+    }
+    function reassign(t) { document.getElementById('alumno-tutor-name').innerText = t; wa("Tutor reasignado a " + t); }
+</script>
+</body>
+</html>

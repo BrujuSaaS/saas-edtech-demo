@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SaaS EdTech Core</title>
+    <script src="https://tailwindcss.com"></script>
+    <style>.pantalla, .subtab { display: none; } .pantalla.active, .subtab.active { display: block; }</style>
+</head>
+<body class="bg-[#0b0f19] text-slate-100 font-sans p-4 flex justify-center">
+<div class="w-full max-w-xl bg-[#131a26] p-5 rounded-xl border border-slate-800 shadow-2xl space-y-4">
+    <!-- SELECTOR DE ROLES PRINCIPAL -->
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3 gap-2">
+        <h1 class="text-sm font-black tracking-tight text-white">🎯 CORE EDTECH SAAS</h1>
+        <div class="flex bg-slate-800 p-1 rounded-lg gap-1 text-[11px]" id="role-selector">
+            <button id="nav-alumno" onclick="role('alumno')" class="px-2.5 py-1 rounded bg-blue-600 text-white font-bold uppercase">Alumno</button>
+            <button id="nav-profesor" onclick="role('profesor')" class="px-2.5 py-1 rounded text-slate-400 font-bold uppercase">Docente</button>
+            <button id="nav-instituto" onclick="role('instituto')" class="px-2.5 py-1 rounded text-slate-400 font-bold uppercase">🏛️ Inst</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA ALUMNO -->
+    <div id="screen-alumno" class="pantalla active space-y-3">
+        <div class="bg-blue-950/40 border-l-4 border-blue-500 p-3 text-xs text-blue-300 rounded-r">
+            <strong>Desafío Oral Martín (Globant):</strong> Explica el retraso del sprint por el bug crítico.
+        </div>
+        <div class="bg-slate-900/50 border border-dashed border-slate-700 rounded-xl p-4 text-center">
+            <button id="mic-btn" onclick="toggleMic()" class="w-12 h-14 bg-red-500 text-white rounded-full text-xl mx-auto block cursor-pointer">🎙️</button>
+            <p id="mic-status" class="text-[10px] font-bold text-slate-400 mt-2">Tocá para grabar audio real en vivo</p>
+            <div id="audio-box" class="mt-2 hidden"></div>
+        </div>
+        <div class="flex gap-1 bg-slate-800 p-1 rounded-lg text-[10px] font-bold">
+            <button id="t-ac" onclick="sub('acad')" class="flex-1 py-1 rounded bg-blue-600 text-white">📚 Devolución</button>
+            <button id="t-fo" onclick="sub('foro')" class="flex-1 py-1 text-slate-400">💬 Foro</button>
+            <button id="t-bi" onclick="sub('biblio')" class="flex-1 py-1 text-slate-400">📖 Biblioteca</button>
+            <button id="t-ev" onclick="sub('eval')" class="flex-1 py-1 text-slate-400">📝 TPs</button>
+        </div>
+        <div id="sb-acad" class="subtab active"><textarea id="alumno-view" readonly class="w-full h-24 p-2 bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 rounded-lg resize-none" placeholder="La corrección aparecerá acá..."></textarea></div>
+        <div id="sb-foro" class="subtab hidden space-y-2">
+            <div id="foro-box" class="h-20 bg-slate-950 p-2 rounded-lg text-xs overflow-y-auto"><strong>Prof. Laura M.:</strong> Bienvenidos al foro de metodologías ágiles.</div>
+            <div class="flex gap-2"><input type="text" id="foro-input" class="flex-1 p-1 bg-slate-950 border border-slate-800 text-xs rounded-lg text-white"><button onclick="enviarMensajeForo()" class="bg-blue-600 text-white px-3 text-xs font-bold rounded-lg">POST</button></div>
+        </div>
+        <div id="sb-biblio" class="subtab hidden flex justify-between items-center text-xs bg-slate-950 p-3 rounded-lg border border-slate-800"><span>📕 Guía de Idioms (PDF)</span><button onclick="alert('Descargando...')" class="text-blue-400 font-bold">Descargar</button></div>
+        <div id="sb-eval" class="subtab hidden flex justify-between items-center text-xs bg-slate-950 p-3 rounded-lg border border-slate-800"><span>📑 TP 1: Redacción de Mails</span><button onclick="alert('TP entregado.')" class="bg-blue-600 text-white font-bold px-3 py-1 rounded-lg">Entregar</button></div>
+    </div>
+
+    <!-- PANTALLA DOCENTE -->
+    <div id="screen-profesor" class="pantalla space-y-3">
+        <div class="bg-emerald-950/40 border border-dashed border-emerald-800 p-3 rounded-lg text-xs text-emerald-300 flex justify-between">
+            <span>🤖 <strong>Asistente IA:</strong> Vicio en la letra 'R'.</span><button onclick="inject('r_sound')" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px]">Aplicar</button>
+        </div>
+        <div id="prof-playback" class="bg-slate-950 p-3 border border-slate-800 rounded-lg text-center text-xs text-slate-500 italic">Esperando audio del alumno...</div>
+        <div class="grid grid-cols-2 gap-2 text-xs font-bold text-slate-900"><button class="p-2 bg-slate-100 border rounded-lg text-left" onclick="inject('vocals')">❌ #VOCAL_C_L</button><button class="p-2 bg-slate-100 border rounded-lg text-left" onclick="inject('r_sound')">❌ #R_SOFT</button></div>
+        <textarea id="editor" class="w-full h-24 p-2 bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 rounded-lg" placeholder="Seleccioná un error arriba..."></textarea>
+        <button onclick="sendFeedback()" class="w-full bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs uppercase">Enviar Corrección</button>
+    </div>
+
+    <!-- PANTALLA INSTITUTO -->
+    <div id="screen-instituto" class="pantalla text-xs space-y-2">
+        <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-800">🏛️ <strong>Directora Académica:</strong> Mg. Elena Rostova (SuperAdmin)</div>
+        <div class="bg-slate-800/40 p-3 border border-slate-800 flex justify-between items-center rounded-lg"><span>Martín (Globant)</span><button onclick="triggerMora()" class="bg-red-950 text-red-400 border border-red-900 px-3 py-1 rounded-lg font-bold">Forzar Mora</button></div>
+    </div>
+</div>
+<div id="wa" class="hidden fixed bottom-4 right-4 z-50 bg-[#25D366] text-white p-3 rounded-xl max-w-[200px] text-xs shadow-xl"></div>
+<script>
+    let mediaRecorder; let audioChunks = []; let isRec = false; let recordedAudioUrl = null;
+    const db = { vocals: "⚠️ CORRECCIÓN: Vocales cortas vs. largas\n\nConfundir Sheet (larga) con Shit (corta).\n\n🎯 TIP: Sonido largo /i:/ -> sonreí.", r_sound: "⚠️ CORRECCIÓN: La 'R'\n\nLa lengua nunca toca el paladar; se curva hacia atrás." };
+    
+    function role(r) {
+        document.getElementById('screen-alumno').className = 'pantalla ' + (r === 'alumno' ? 'active space-y-3' : 'hidden');
+        document.getElementById('screen-profesor').className = 'pantalla ' + (r === 'profesor' ? 'active space-y-3' : 'hidden');
+        document.getElementById('screen-instituto').className = 'pantalla ' + (r === 'instituto' ? 'active space-y-2' : 'hidden');
+        
+        document.querySelectorAll('#role-selector button').forEach(b => b.className = 'px-2.5 py-1 rounded text-slate-400 font-bold uppercase');
+        document.getElementById('nav-' + r).className = 'px-2.5 py-1 rounded bg-blue-600 text-white font-bold uppercase';
+    }
+    function sub(t) {
+        document.querySelectorAll('.subtab').forEach(s => s.className = 'subtab hidden');
+        document.querySelectorAll('[id^="t-"]').forEach(b => b.className = 'flex-1 py-1 text-slate-400');
+        document.getElementById('sb-' + t).className = 'subtab active' + (t === 'foro' ? ' space-y-2' : '');
+        document.getElementById('t-' + t).className = 'flex-1 py-1 rounded bg-blue-600 text-white';
+    }
+    function wa(m) { const p = document.getElementById('wa'); p.innerHTML = "<strong>💬 WhatsApp API</strong><br>" + m; p.style.display = 'block'; setTimeout(() => p.style.display = 'none', 3000); }
+    async function toggleMic() {
+        const btn = document.getElementById('mic-btn'); const status = document.getElementById('mic-status');
+        if (!isRec) {
+            audioChunks = [];
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(audioChunks, { type: 'audio/wav' }); recordedAudioUrl = URL.createObjectURL(blob);
+                    document.getElementById('audio-box').innerHTML = `<audio controls src="${recordedAudioUrl}" class="w-full mt-2"></audio>`;
+                    document.getElementById('audio-box').style.display = 'block';
+                    document.getElementById('prof-playback').innerHTML = `<audio controls src="${recordedAudioUrl}" class="w-full"></audio>`;
+                    wa("Audio ruteado al panel docente.");
+                };
+                mediaRecorder.start(); isRec = true; btn.className = 'w-12 h-14 bg-slate-700 text-white rounded-full text-xl mx-auto block animate-pulse'; status.innerText = '🛑 Grabando...';
+            } catch (err) { alert("Error de micrófono: " + err); }
+        } else { mediaRecorder.stop(); isRec = false; btn.className = 'w-12 h-14 bg-red-500 text-white rounded-full text-xl mx-auto block'; status.innerText = '✅ Audio procesado.'; }
+    }
+    function inject(k) { document.getElementById('editor').value = db[k] || ''; }
+    function sendFeedback() {
+        const t = document.getElementById('editor').value; if(!t) return;
+        document.getElementById('alumno-view').value = t; wa("Corrección enviada al Alumno.");
+        setTimeout(() => { role('alumno'); sub('acad'); }, 1000);
+    }
+    function enviarMensajeForo() {
+        const t = document.getElementById('foro-input').value; if(!t) return;
+        document.getElementById('foro-box').innerHTML += `<br><strong>Martín:</strong> ${t}`;
+        document.getElementById('foro-input').value = "";
+    }
+    function triggerMora() { wa("Mora forzada. Alumno bloqueado."); role('alumno'); }
+</script>
+</body>
+</html>
+

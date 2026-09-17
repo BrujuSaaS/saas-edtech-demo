@@ -1,0 +1,36 @@
+<!<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white p-4 font-sans flex justify-center">
+<div style="background:#1e293b; padding:10px; text-align:center; border-radius:8px; margin-bottom:15px;">
+    <a href="index.html" style="color:white; font-weight:bold; margin-right:15px; text-decoration:none;">1. GRABADOR DE VOZ</a>
+    <a href="foro.html" style="color:#fbbf24; font-weight:bold; margin-right:15px; text-decoration:none;">2. CARTELERA Y FORO</a>
+    <a href="biblioteca.html" style="color:#60a5fa; font-weight:bold; text-decoration:none;">3. BIBLIOTECA Y TPS</a>
+</div>
+
+<div class="w-full max-w-md bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl space-y-4">
+    <h3 class="text-xs font-black uppercase text-amber-400">📢 Cartelera de Noticias de la Academia</h3>
+    <div class="p-3 bg-amber-950/40 border-l-2 border-amber-500 text-xs text-amber-200 rounded">
+        <strong>¡WEBINAR EN VIVO ESTE JUEVES!</strong> "Estrategias de Negociación Corporativa Avanzada".
+    </div>
+    <h3 class="text-xs font-black uppercase text-blue-400 border-t border-slate-700 pt-3">💬 Foro de Discusión Activo: Daily Standups</h3>
+    <div id="box" class="h-24 bg-slate-950 p-2.5 rounded-lg border border-slate-700 text-xs overflow-y-auto space-y-1">
+        <p><span class="text-blue-400">Prof. Laura M.:</span> Bienvenidos al foro de vocabulario técnico agilista.</p>
+    </div>
+    <div class="flex gap-2">
+        <input type="text" id="in" placeholder="Escribí tu consulta..." class="flex-1 p-2 bg-slate-950 border border-slate-700 text-xs rounded-lg text-white">
+        <button onclick="p()" class="bg-blue-600 text-white px-3 text-xs rounded-lg font-bold uppercase">Post</button>
+    </div>
+</div>
+<script>
+    function p() {
+        const v = document.getElementById('in').value; if(!v) return;
+        document.getElementById('box').innerHTML += `<p class='pt-1'><strong>Martín:</strong> ${v}</p>`;
+        document.getElementById('in').value = "";
+    }
+</script>
+</body>
+</html>

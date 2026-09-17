@@ -1,0 +1,23 @@
+/* DESIGN SYSTEM SAAS EDTECH - PREMIUM DARK MODE */
+:root {
+    --bg-main: #0b0f19;
+    --bg-card: #131a26;
+    --bg-input: #1e293b;
+    --brand: #0070f3;
+    --brand-success: #10b981;
+    --brand-danger: #ef4444;
+    --text-white: #f8fafc;
+    --text-slate: #94a3b8;
+    --border-glow: #1e293b;
+}
+body { background-color: var(--bg-main); color: var(--text-white); font-family: system-ui, -apple-system, sans-serif; padding: 24px; display: flex; justify-content: center; margin: 0; }
+.saas-container { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 20px; }
+.saas-card { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+.saas-flex { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.saas-nav { display: flex; bg: #1e293b; padding: 4px; border-radius: 12px; gap: 4px; background: #111827; }
+.saas-btn { flex: 1; background: none; border: none; padding: 12px; font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-slate); cursor: pointer; border-radius: 8px; transition: all 0.2s; }
+.saas-btn.active { background: var(--brand); color: white; box-shadow: 0 4px 12px rgba(0,112,243,0.3); }
+.saas-mic { width: 64px; height: 60px; background: var(--brand-danger); color: white; border: none; border-radius: 50%; font-size: 24px; cursor: pointer; display: block; margin: 15px auto; box-shadow: 0 0 20px rgba(239,68,68,0.2); }
+.saas-mic.recording { background: #334155; animation: blink 1s infinite; }
+.saas-badge { font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }

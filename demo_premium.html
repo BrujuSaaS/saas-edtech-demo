@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS EdTech - Ecosistema Alfa</title>
+    <!-- Tailwind CSS para diseño de alta gama modo oscuro corporativo -->
+    <script src="https://tailwindcss.com"></script>
+    <style>
+        .screen { display: none; } .screen.active { display: block; }
+        .subtab { display: none; } .subtab.active { display: block; }
+    </style>
+</head>
+<body class="bg-[#0b0f19] text-slate-100 font-sans p-4 md:p-8 pb-20 flex justify-center">
+<div class="w-full max-w-2xl bg-[#131a26] p-6 rounded-2xl border border-slate-800 shadow-2xl space-y-6">
+    
+    <!-- CABECERA PRINCIPAL Y SELECTOR DE ROLES UNIFICADO -->
+    <div class="flex flex-col sm:flex-row justify-between items-center border-b border-slate-800 pb-4 gap-4">
+        <div>
+            <span class="bg-blue-950 text-blue-400 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">SaaS Alfa V1.0</span>
+            <h1 class="text-xl font-black tracking-tight text-white mt-1">🎯 CORE EDTECH SAAS</h1>
+        </div>
+        <div class="flex bg-slate-800 p-1 rounded-xl gap-1 w-full sm:w-auto" id="role-selector">
+            <button id="nav-alumno" onclick="switchRole('alumno')" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg bg-blue-600 text-white uppercase shadow-lg shadow-blue-500/10">1. Alumno</button>
+            <button id="nav-profesor" onclick="switchRole('profesor')" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg text-slate-400 hover:bg-slate-700 uppercase">2. Docente</button>
+            <button id="nav-instituto" onclick="switchRole('instituto')" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg text-slate-400 hover:bg-slate-700 uppercase">🏛️ Inst</button>
+        </div>
+    </div>
+    <!-- PANTALLA 1: PORTAL DEL ALUMNO (MÓDULOS GASTÓN) -->
+    <div id="screen-alumno" class="screen active space-y-6">
+        <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+            <div>
+                <h2 class="text-sm font-bold text-white">📱 Portal Alumno: <span class="text-blue-400 font-black">Martín</span></h2>
+                <p class="text-slate-400 mt-0.5">Globant International | <span id="alumno-tutor-name" class="font-bold text-slate-300">Tutor: Prof. Laura M.</span></p>
+            </div>
+            <span id="alumno-status-badge" class="bg-emerald-950/60 text-emerald-400 font-bold px-3 py-1 rounded-full border border-emerald-900/50">✔ AL DÍA</span>
+        </div>
+
+        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-800 text-center space-y-4">
+            <div class="bg-blue-950/40 border-l-4 border-blue-500 p-3.5 text-left text-xs text-blue-300 rounded-r-xl">
+                <strong>Desafío Oral Semanal:</strong> Explica en 45 segundos por qué el sprint se va a demorar 2 días debido al bug crítico detectado en producción.
+            </div>
+            <button id="mic-btn" onclick="toggleRecording()" class="w-16 h-16 bg-red-500 text-white rounded-full text-2xl mx-auto shadow-lg shadow-red-500/30 flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition-all">🎙️</button>
+            <p id="mic-status" class="text-xs font-bold text-slate-400">Tocá el micrófono para grabar tu respuesta en vivo</p>
+            <div id="audio-preview-container" class="mt-2 hidden"></div>
+        </div>
+
+        <!-- SUB-NAVEGACIÓN INTERNA DE GASTÓN -->
+        <div class="flex gap-1 bg-slate-800 p-1 rounded-xl text-xs font-bold overflow-x-auto">
+            <button id="tab-acad" onclick="switchStudentSubTab('acad')" class="flex-1 py-2 px-3 rounded-lg bg-blue-600 text-white uppercase">📚 Devolución</button>
+            <button id="tab-news" onclick="switchStudentSubTab('news')" class="flex-1 py-2 px-3 rounded-lg text-slate-400 uppercase hover:bg-slate-700">💬 Foro</button>
+            <button id="tab-study" onclick="switchStudentSubTab('study')" class="flex-1 py-2 px-3 rounded-lg text-slate-400 uppercase hover:bg-slate-700">📖 Biblioteca</button>
+            <button id="tab-eval" onclick="switchStudentSubTab('eval')" class="flex-1 py-2 px-3 rounded-lg text-slate-400 uppercase hover:bg-slate-700">📝 TPs</button>
+        </div>
+
+        <div id="sub-alumno-acad" class="subtab active">
+            <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-800">
+                <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">📥 Último Feedback Recibido</h4>
+                <textarea id="alumno-feedback-view" readonly class="w-full h-32 p-3 bg-slate-950 border border-slate-800 rounded-xl font-mono text-xs text-slate-300 resize-none" placeholder="La corrección estructurada aparecerá acá al instante..."></textarea>
+            </div>
+        </div>
+
+        <div id="sub-alumno-news" class="subtab space-y-4">
+            <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-800">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">📢 Cartelera de Noticias</h4>
+                <div class="p-3 bg-amber-950/40 border-l-4 border-amber-500 text-xs rounded-r-xl text-amber-300">
+                    <strong>¡WEBINAR EN VIVO ESTE JUEVES!</strong>
+                    <p class="text-slate-400 mt-1">"Estrategias de Negociación Corporativa Avanzada en Mercados Angloparlantes".</p>
+                </div>
+            </div>
+            <div class="bg-slate-800/40 p-4 rounded-xl border border-slate-800">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">💬 Foro Activo: Daily Standups</h4>
+                <div id="foro-mensajes" class="h-28 bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs overflow-y-auto space-y-2">
+                    <div><span class="text-blue-400 font-bold">Prof. Laura M.:</span> Bienvenidos al foro de vocabulario técnico de metodologías ágiles.</div>
+                </div>
+                <div class="flex gap-2 mt-3">
+                    <input type="text" id="foro-input" placeholder="Escribí tu consulta..." class="flex-1 p-2 bg-slate-950 border border-slate-800 text-xs text-white rounded-lg focus:outline-none">
+                    <button onclick="enviarMensajeForo()" class="bg-blue-600 text-white px-4 py-2 text-xs font-bold rounded-lg uppercase">Post</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="sub-alumno-study" class="subtab">
+            <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-800">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">📖 Biblioteca Virtual</h4>
+                <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex justify-between items-center text-xs">
+                    <div>
+                        <strong class="text-slate-200">📕 Guía Completa de Idioms de Negocios</strong>
+                        <span class="block text-[10px] text-slate-500 mt-0.5">PDF | 2.4 MB</span>
+                    </div>
+                    <button onclick="alert('Descargando de la Biblioteca Virtual...')" class="bg-blue-950 text-blue-400 font-bold px-3 py-1.5 rounded-lg border border-blue-900/50">Descargar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="sub-alumno-eval" class="subtab">
+            <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-800">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">📝 Entrega de Evaluaciones</h4>
+                <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex justify-between items-center text-xs">
+                    <div>
+                        <strong class="text-slate-200">📑 TP 1: Redacción de Mails de Negocio</strong>
+                        <span class="block text-[10px] text-amber-500 font-bold mt-0.5">⚠️ Pendiente Entrega</span>
+                    </div>
+                    <button onclick="alert('TP de evaluación entregado con éxito.')" class="bg-blue-600 text-white font-bold px-4 py-2 rounded-lg uppercase">Entregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
