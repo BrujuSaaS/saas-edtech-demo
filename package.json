@@ -1,9 +1,14 @@
 {
+  "name": "saas-edtech-backend",
+  "version": "1.0.0",
+  "description": "Backend Core Multi-Tenant",
+  "main": "servidor.js",
+  "scripts": {
+    "start": "node servidor.js"
+  },
   "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "multer": "^2.2.0",
-    "path": "^0.12.7",
-    "pg": "^8.23.0"
+    "express": "^4.19.2",
+    "pg": "^8.11.5",
+    "cors": "^2.8.5"
   }
 }
