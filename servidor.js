@@ -2,10 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs');
-const { Pool } = require('pg'); // Driver nativo de Postgres
+//const { Pool } = require('pg'); // Driver nativo de Postgres
 
 const app = express();
 // app.use(cors()); // <--- NUEVO: Habilitar que Next.js le mande datos
+
+// CONFIGURACIÓN DE ACCESO SEGURO A POSTGRESQL EN LA NUBE (NEON.TECH)
+const { Pool } = require('pg');
+
+const pool = new Pool({
+    connectionString: "postgresql://neondb_owner:npg_7kBGDRE4OToP@ep-late-cell-b65wnvnf-pooler.c-2.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+    ssl: { rejectUnauthorized: false } // Candado obligatorio para conexiones https cifradas en la nube
+});
+
 // Liberar CORS absoluto para que los dos túneles de ngrok se hablen en internet
 // CORRECCIÓN INYECTOR DE CABECERAS (HACKEO DE ENTRADA)
 app.use((req, res, next) => {
@@ -34,13 +43,13 @@ app.use('/grabaciones', express.static('grabaciones'));
 app.use(express.json()); // Habilitar lectura de JSON corporativo
 
 // Configuración del Pool de conexión al Docker (Puerto estándar 5432)
-const pool = new Pool({
-    user: 'adrian_cto',
-    host: 'localhost',
-    database: 'edtech_core_db',
-    password: 'bariloche_saas_2026', // <--- Poné tu contraseña real del Día 1
-    port: 5432,
-});
+//const pool = new Pool({
+//    user: 'adrian_cto',
+//    host: 'localhost',
+//    database: 'edtech_core_db',
+//    password: 'bariloche_saas_2026', // <--- Poné tu contraseña real del Día 1
+//    port: 5432,
+//});
 
 async function iniciarTablasRelacionales() {
     try {
